@@ -13,7 +13,7 @@ headerLength = struct.calcsize(headerFormat)
 windowSize = 400
 minPacket = 40
 maxPacket = 80
-defaultRTT = 100
+defaultRTT = 30
 rawDataLength = 3000
 
 syn = 0x00
@@ -130,7 +130,7 @@ class clientHandeler:
             packet['retries'] += 1
             packetResend += 1
             packetSend += 1
-            print(f"[{datetime.now().strftime('%H:%M:%S.%f')[:-3]}] 重传 seq={seq} (尝试次数: {packet['retries']})")
+            print(f"[{datetime.now().strftime('%H:%M:%S.%f')[:-3]}] 重传 seq={seq} {self.unackPackets[seq]['start_byte']}~{self.unackPackets[seq]['end_byte']} 字节 (尝试次数: {packet['retries']})")
 
     def recvAck(self):
         try:
